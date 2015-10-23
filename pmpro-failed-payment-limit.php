@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: PMPro Failed Payment Limit
+Plugin Name: Paid Memberships Pro - Failed Payment Limit Add On
 Plugin URI: http://www.paidmembershipspro.com/wp/pmpro-failed-payment-limit/
 Description: Cancel members subscriptions after X failed payments. Set X in plugin code.
-Version: .1
+Version: .1.1
 Author: Stranger Studios
 Author URI: http://www.strangerstudios.com
 */
@@ -41,7 +41,7 @@ function pmprofpl_pmpro_subscription_payment_failed($order)
 			
 			//send an email to the admin
 			$myemail = new PMProEmail();
-			$myemail->sendCancelAdminEmail($current_user, $old_level_id);			
+			$myemail->sendCancelAdminEmail($user, $old_level_id);			
 			
 			//update count in meta
 			delete_user_meta($user->ID, "pmpro_failed_payment_count");
@@ -75,3 +75,18 @@ function pmprofpl_pmpro_added_order($order)
 }
 add_action('pmpro_added_order', 'pmprofpl_pmpro_added_order');
 add_action('pmpro_updated_order', 'pmprofpl_pmpro_added_order');	//update too for cases where a temp order is made at checkout then updated
+
+/*
+Function to add links to the plugin row meta
+*/
+function pmprofpl_plugin_row_meta($links, $file) {
+	if(strpos($file, 'pmpro-failed-payment-limit.php') !== false)
+	{
+		$new_links = array(
+			'<a href="' . esc_url('http://paidmembershipspro.com/support/') . '" title="' . esc_attr( __( 'Visit Customer Support Forum', 'pmpro' ) ) . '">' . __( 'Support', 'pmpro' ) . '</a>',
+		);
+		$links = array_merge($links, $new_links);
+	}
+	return $links;
+}
+add_filter('plugin_row_meta', 'pmprofpl_plugin_row_meta', 10, 2);
