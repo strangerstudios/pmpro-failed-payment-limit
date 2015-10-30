@@ -31,8 +31,10 @@ function pmprofpl_pmpro_subscription_payment_failed($order)
 	//if we hit X, cancel the user
 	if($count == PMPRO_FAILED_PAYMENT_LIMIT)
 	{
+		$old_level_id = pmpro_getMembershipLevelForUser($user->ID)->ID;
+		
 		//cancel subscription
-		$worked = pmpro_changeMembershipLevel(false, $user->ID);						
+		$worked = pmpro_changeMembershipLevel(false, $user->ID);					
 		if($worked === true)
 		{							
 			//send an email to the member
@@ -41,7 +43,7 @@ function pmprofpl_pmpro_subscription_payment_failed($order)
 			
 			//send an email to the admin
 			$myemail = new PMProEmail();
-			$myemail->sendCancelAdminEmail($current_user, $old_level_id);			
+			$myemail->sendCancelAdminEmail($user, $old_level_id);			
 			
 			//update count in meta
 			delete_user_meta($user->ID, "pmpro_failed_payment_count");
