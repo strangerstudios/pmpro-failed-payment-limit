@@ -39,7 +39,7 @@ function pmprofpl_pmpro_subscription_payment_failed($order)
 		{							
 			//send an email to the member
 			$myemail = new PMProEmail();
-			$myemail->sendCancelEmail();
+			$myemail->sendCancelEmail($user->ID);
 			
 			//send an email to the admin
 			$myemail = new PMProEmail();
