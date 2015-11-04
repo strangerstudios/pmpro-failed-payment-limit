@@ -3,7 +3,7 @@
 Plugin Name: Paid Memberships Pro - Failed Payment Limit Add On
 Plugin URI: http://www.paidmembershipspro.com/wp/pmpro-failed-payment-limit/
 Description: Cancel members subscriptions after X failed payments. Set X in plugin code.
-Version: .1.1
+Version: .1.2
 Author: Stranger Studios
 Author URI: http://www.strangerstudios.com
 */
@@ -31,13 +31,15 @@ function pmprofpl_pmpro_subscription_payment_failed($order)
 	//if we hit X, cancel the user
 	if($count == PMPRO_FAILED_PAYMENT_LIMIT)
 	{
+		$old_level_id = pmpro_getMembershipLevelForUser($user->ID)->ID;
+		
 		//cancel subscription
 		$worked = pmpro_changeMembershipLevel(false, $user->ID);						
 		if($worked === true)
 		{							
 			//send an email to the member
 			$myemail = new PMProEmail();
-			$myemail->sendCancelEmail();
+			$myemail->sendCancelEmail($user->ID);
 			
 			//send an email to the admin
 			$myemail = new PMProEmail();
