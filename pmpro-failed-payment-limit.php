@@ -19,12 +19,18 @@ function pmprofpl_pmpro_custom_advanced_settings($settings) {
 		$settings = array();
 
 	$settings[] =  array(
-			'field_name' => 'pmpro_failed_payment_limit',
+			'field_name' => 'pmpro_failed_payment_limit_heading',
+            'field_type' => 'heading',
+            'label' => 'Failed Payment Limit Settings',
+		);
+		
+	$settings[] = array(
+			'field_name' => 'pmpro_failed_payment_limit_field',
             'field_type' => 'select',
             'label' => 'Failed Payment Limit',
             'description' => '',
             'options' => array(''=>'None. Let the gateway handle it.', '1' => '1. Cancel after the first failed payment.', '2' => '2. Cancel after the second failed payment.', '3' => '3. Cancel after the third failed payment.')
-        );
+	);		
 
 	return $settings;
 }
