@@ -28,7 +28,7 @@ function pmprofpl_pmpro_custom_advanced_settings($settings) {
 
 	return $settings;
 }
-add_filter('pmpro_custom_advanced_settings', 'pmprofpl_pmpro_custom_advanced_settings');
+add_filter( 'pmpro_custom_advanced_settings', 'pmprofpl_pmpro_custom_advanced_settings', 20 );
 
 //helper function to get the limit
 function pmprofpl_getLimit() {
