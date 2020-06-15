@@ -74,8 +74,13 @@ function pmprofpl_pmpro_subscription_payment_failed($order) {
 			//exit so we don't send failed payment email/etc
 			exit;
 		} else {
+			//shouldn't get here, but we must cancel at gateway level
+			if( $order->Gateway ){
+				$order->Gateway->cancel( $order );
+			}
+			
 			//shouldn't get here, but keep track of count anyway
-			update_user_meta($user->ID, "pmpro_failed_payment_count", $count);
+			//update_user_meta($user->ID, "pmpro_failed_payment_count", $count);
 		}
 	} else {
 		//update count in meta
