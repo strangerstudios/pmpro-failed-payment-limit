@@ -84,6 +84,27 @@ function pmprofpl_pmpro_subscription_payment_failed($order) {
 }
 add_action('pmpro_subscription_payment_failed', 'pmprofpl_pmpro_subscription_payment_failed');
 
+// glue for "cancel on next payment date" addon
+add_filter( 'pmproconpd_next_payment_timestamp_to_cancel_on', function ( $pmpro_next_payment_timestamp, $gateway, $level, $user_id ) {
+	//get their failed payment count
+	$count = get_user_meta($user_id, "pmpro_failed_payment_count", true);
+
+	//increment it
+	if(empty($count))
+		$count = 1;
+	else
+		$count = $count + 1;
+
+	//if we hit X, ensure recurring_payment_skipped is treated like a cancellation
+	if($count >= pmprofpl_getLimit()) {
+		if ( ! empty( $_POST['txn_type'] ) && 'recurring_payment_skipped' === $_POST['txn_type'] ) {
+			$pmpro_next_payment_timestamp = false;
+		}
+	}
+
+	return $pmpro_next_payment_timestamp;
+}, 10, 4 );
+
 //update count on new orders
 function pmprofpl_pmpro_added_order($order) {
 	//success?
