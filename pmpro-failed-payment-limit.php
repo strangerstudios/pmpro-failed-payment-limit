@@ -36,7 +36,7 @@ function pmprofpl_getLimit() {
 	if(defined('PMPRO_FAILED_PAYMENT_LIMIT'))
 		return PMPRO_FAILED_PAYMENT_LIMIT;
 	else
-		return pmpro_getOption('pmpro_failed_payment_limit');
+		return get_option( 'pmpro_failed_payment_limit' );
 }
 
 //handle payment failures
