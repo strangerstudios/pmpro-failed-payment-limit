@@ -3,7 +3,7 @@
 Plugin Name: Paid Memberships Pro - Failed Payment Limit Add On
 Plugin URI: http://www.paidmembershipspro.com/wp/pmpro-failed-payment-limit/
 Description: Cancel members subscriptions after 1-3 failed payments.
-Version: .2
+Version: .3
 Author: Stranger Studios
 Author URI: http://www.strangerstudios.com
 */
