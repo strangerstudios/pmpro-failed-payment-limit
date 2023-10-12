@@ -96,6 +96,15 @@ function pmprofpl_pmpro_added_order($order) {
 add_action('pmpro_added_order', 'pmprofpl_pmpro_added_order');
 add_action('pmpro_updated_order', 'pmprofpl_pmpro_added_order');	//update too for cases where a temp order is made at checkout then updated
 
+/**
+ * Mark the plugin as MMPU-incompatible.
+ */
+function pmprofpl_mmpu_incompatible_add_ons( $incompatible ) {
+    $incompatible[] = 'PMPro Failed Payment Limit Add On';
+    return $incompatible;
+}
+add_filter( 'pmpro_mmpu_incompatible_add_ons', 'pmprofpl_mmpu_incompatible_add_ons' );
+
 /*
 Function to add links to the plugin row meta
 */
